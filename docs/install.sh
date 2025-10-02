@@ -16,46 +16,28 @@ echo -e "${GREEN}     Claude Kiro - Spec-Driven Development for Claude Code     
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
 
-# Check for Claude Code directory
-if [ ! -d "$HOME/.claude" ]; then
-    echo -e "${RED}Error: Claude Code directory not found at ~/.claude${NC}"
-    echo "Please ensure Claude Code is installed and has been run at least once."
-    exit 1
-fi
-
-# Create necessary directories
-echo -e "${YELLOW}Creating configuration directories...${NC}"
-mkdir -p ~/.claude/{output_styles,slash_commands,hooks,steering}
+# Create project-specific .claude directory
+echo -e "${YELLOW}Creating project configuration directories...${NC}"
+mkdir -p .claude/{output-styles,commands/spec}
 
 # Base URL for raw GitHub content
-BASE_URL="https://raw.githubusercontent.com/angelsen/claude-kiro/main/.claude"
+BASE_URL="https://raw.githubusercontent.com/angelsen/claude-kiro/master/.claude"
 
 # Download output style
 echo -e "${YELLOW}Installing Spec-Driven Developer output style...${NC}"
-curl -sSL "$BASE_URL/output_styles/spec-driven-developer.md" \
-     -o ~/.claude/output_styles/spec-driven-developer.md
+curl -sSL "$BASE_URL/output-styles/spec-driven.md" \
+     -o .claude/output-styles/spec-driven.md
 
 # Download slash commands
 echo -e "${YELLOW}Installing slash commands...${NC}"
-curl -sSL "$BASE_URL/slash_commands/spec-create.md" \
-     -o ~/.claude/slash_commands/spec-create.md
-curl -sSL "$BASE_URL/slash_commands/spec-implement.md" \
-     -o ~/.claude/slash_commands/spec-implement.md
-curl -sSL "$BASE_URL/slash_commands/spec-review.md" \
-     -o ~/.claude/slash_commands/spec-review.md
+curl -sSL "$BASE_URL/commands/spec/create.md" \
+     -o .claude/commands/spec/create.md
+curl -sSL "$BASE_URL/commands/spec/implement.md" \
+     -o .claude/commands/spec/implement.md
+curl -sSL "$BASE_URL/commands/spec/review.md" \
+     -o .claude/commands/spec/review.md
 
-# Download hooks (Phase 2 - optional)
-if [ -f "$BASE_URL/hooks/pre-commit-spec-update.sh" ]; then
-    echo -e "${YELLOW}Installing hooks...${NC}"
-    curl -sSL "$BASE_URL/hooks/pre-commit-spec-update.sh" \
-         -o ~/.claude/hooks/pre-commit-spec-update.sh
-    chmod +x ~/.claude/hooks/pre-commit-spec-update.sh
-fi
-
-# Download steering file
-echo -e "${YELLOW}Installing project steering file...${NC}"
-curl -sSL "$BASE_URL/steering/CLAUDE.md" \
-     -o ~/.claude/steering/CLAUDE.md
+echo -e "${GREEN}Files installed in current project's .claude directory${NC}"
 
 # Success message
 echo ""
@@ -64,9 +46,11 @@ echo -e "${GREEN}✓ Installation Complete!${NC}"
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
 echo "Next steps:"
-echo "1. Restart Claude Code to load the new configuration"
-echo "2. Select 'Spec-Driven Developer' as your output style in settings"
-echo "3. Try creating your first spec with: /spec-create [feature-description]"
+echo "1. Open this project in Claude Code"
+echo "2. The spec-driven output style and slash commands are now available for this project"
+echo "3. Try creating your first spec with: /spec:create [feature-description]"
+echo ""
+echo "Note: These settings are project-specific and won't affect other projects"
 echo ""
 echo "Documentation: https://github.com/angelsen/claude-kiro"
 echo ""
