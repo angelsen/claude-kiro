@@ -122,6 +122,17 @@ All research extracted from local scraped docs:
 - Kiro: 89 pages (kiro.dev)
 - Combined: 10 research docs, 2 synthesis guides
 
+## Development
+
+### Local Documentation Server
+
+```bash
+# Serve docs locally
+cd docs
+python -m http.server 8000
+# Visit: http://localhost:8000/
+```
+
 ## Implementation Status
 
 - ✅ CLI tool (`ck`) - Complete with all commands
