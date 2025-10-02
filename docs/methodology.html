@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Learn the spec-driven development methodology - requirements, design, tasks, and implementation"
+    />
+    <meta name="author" content="Claude Kiro" />
+    <title>Methodology - Claude Kiro</title>
+
+    <!-- Framework CSS -->
+    <link rel="stylesheet" href="/assets/css/theme.css" />
+    <link rel="stylesheet" href="/assets/css/kiro.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="container nav-container">
+        <a href="/" class="nav-brand">
+          <img
+            src="/assets/img/ghost-icon.svg"
+            alt="Claude Kiro"
+            class="nav-logo"
+          />
+          <span>Claude Kiro</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="nav-links">
+          <a href="/getting-started.html">Docs</a>
+          <a href="/methodology.html" class="active">Methodology</a>
+          <a
+            href="https://github.com/angelsen/claude-kiro"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
+
+        <!-- Mobile Toggle -->
+        <button class="nav-toggle" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div class="nav-mobile">
+        <a href="/getting-started.html">Getting Started</a>
+        <a href="/methodology.html" class="active">Methodology</a>
+        <a href="/cli.html">CLI Reference</a>
+        <a href="/commands.html">Slash Commands</a>
+        <a href="/examples.html">Examples</a>
+        <a
+          href="https://github.com/angelsen/claude-kiro"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="docs-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <nav aria-label="Documentation navigation">
+            <div class="sidebar-section">
+              <h4>Introduction</h4>
+              <ul>
+                <li><a href="/getting-started.html">Getting Started</a></li>
+                <li>
+                  <a href="/methodology.html" class="active">Methodology</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="sidebar-section">
+              <h4>Reference</h4>
+              <ul>
+                <li><a href="/cli.html">CLI Commands</a></li>
+                <li><a href="/commands.html">Slash Commands</a></li>
+              </ul>
+            </div>
+
+            <div class="sidebar-section">
+              <h4>Guides</h4>
+              <ul>
+                <li><a href="/examples.html">Examples</a></li>
+              </ul>
+            </div>
+          </nav>
+        </aside>
+
+        <!-- Page Content -->
+        <main class="content">
+          <h1>Spec-Driven Development Methodology</h1>
+
+          <p class="text-muted">
+            A systematic approach to software development that prioritizes
+            planning, documentation, and structured workflows before writing
+            code.
+          </p>
+
+          <h2>The Core Principle</h2>
+
+          <div class="callout callout-info">
+            <strong>Spec First, Code Second</strong>
+            <p style="margin: var(--space-2) 0 0 0">
+              Every feature starts with a specification that defines
+              <strong>what</strong>
+              to build,
+              <strong>why</strong>
+              it's needed,
+              <strong>how</strong>
+              it will work, and
+              <strong>when</strong>
+              it's complete.
+            </p>
+          </div>
+
+          <p>
+            This isn't just about writing better requirements - it's a complete
+            methodology that includes:
+          </p>
+
+          <ul>
+            <li>
+              <strong>Slash commands</strong>
+              for streamlined workflows (
+              <code>/spec:create</code>
+              ,
+              <code>/spec:implement</code>
+              ,
+              <code>/spec:review</code>
+              )
+            </li>
+            <li>
+              <strong>Output styles</strong>
+              that transform Claude's behavior
+            </li>
+            <li>
+              <strong>TodoWrite integration</strong>
+              for task tracking
+            </li>
+            <li>
+              <strong>CLI tools</strong>
+              for project management (
+              <code>ck init</code>
+              ,
+              <code>ck doctor</code>
+              ,
+              <code>ck hook</code>
+              )
+            </li>
+            <li>
+              <strong>Hook system</strong>
+              for custom automation
+            </li>
+          </ul>
+
+          <h2>The Workflow</h2>
+
+          <div class="card-grid-1">
+            <div class="card">
+              <h3>1️⃣ Requirements</h3>
+              <p>
+                <strong>What and Why.</strong>
+                Define clear, testable requirements using EARS notation. Every
+                requirement follows the pattern:
+              </p>
+              <div class="code-block" style="margin-top: var(--space-3)">
+                <code>
+                  WHEN [condition/event] THE SYSTEM SHALL [expected behavior]
+                </code>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>2️⃣ Design</h3>
+              <p>
+                <strong>How.</strong>
+                Plan the architecture, data models, component structure, and
+                testing strategy. The design phase answers how requirements will
+                be implemented.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>3️⃣ Tasks</h3>
+              <p>
+                <strong>Steps.</strong>
+                Break down the design into specific, actionable implementation
+                tasks. Each task has clear acceptance criteria and dependencies.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>4️⃣ Implementation</h3>
+              <p>
+                <strong>Build.</strong>
+                Code systematically, task by task, with test-driven development
+                and TodoWrite tracking. Verify acceptance criteria before
+                marking complete.
+              </p>
+            </div>
+          </div>
+
+          <h2>EARS Notation</h2>
+
+          <p>
+            <strong>EARS</strong>
+            (Easy Approach to Requirements Syntax) provides a structured format
+            for writing clear, testable requirements.
+          </p>
+
+          <h3>The Format</h3>
+
+          <div class="code-block">
+            <code>
+              WHEN [trigger/condition] THE SYSTEM SHALL [specific behavior]
+            </code>
+          </div>
+
+          <h3>Examples</h3>
+
+          <div class="code-block">
+            <pre><code># User Input Validation
+WHEN a user submits a form with invalid email
+THE SYSTEM SHALL display validation error below the email field
+
+# Success Flow
+WHEN a user clicks "Save" with all required fields filled
+THE SYSTEM SHALL save data to database and show success message
+
+# Error Handling
+WHEN database connection fails
+THE SYSTEM SHALL retry up to 3 times with exponential backoff</code></pre>
+          </div>
+
+          <h3>Why EARS?</h3>
+
+          <ul>
+            <li>
+              <strong>Unambiguous</strong>
+              - Clear conditions and expected behaviors
+            </li>
+            <li>
+              <strong>Testable</strong>
+              - Each requirement becomes a test case
+            </li>
+            <li>
+              <strong>Complete</strong>
+              - Forces consideration of all scenarios
+            </li>
+            <li>
+              <strong>Maintainable</strong>
+              - Easy to update as requirements change
+            </li>
+          </ul>
+
+          <h2>Benefits Over Ad-Hoc Development</h2>
+
+          <div class="card-grid-1">
+            <div class="card">
+              <h3>🐛 Fewer Bugs</h3>
+              <p>
+                Planning catches edge cases and architectural issues before
+                coding. Test-driven implementation ensures requirements are met.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>⚡ Faster Iteration</h3>
+              <p>
+                Changes to specs are faster than refactoring code. Get
+                stakeholder approval before investing in implementation.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>📚 Better Documentation</h3>
+              <p>
+                Specs become living documentation. Future developers understand
+                what was built, why, and how.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>✅ Clearer Success Criteria</h3>
+              <p>
+                Know exactly when a feature is "done". Acceptance criteria
+                prevent scope creep.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>🔄 Evolvable System</h3>
+              <p>
+                Specs can evolve and supersede each other. Track how features
+                change over time.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>🤝 Better Collaboration</h3>
+              <p>
+                Specs provide a shared language. Claude and developers work from
+                the same source of truth.
+              </p>
+            </div>
+          </div>
+
+          <h2>More Than Just Hooks</h2>
+
+          <p>
+            Claude Kiro is a
+            <strong>complete methodology</strong>
+            , not just a collection of hooks. It provides:
+          </p>
+
+          <div class="card-grid-1">
+            <div class="card">
+              <h3>Slash Commands</h3>
+              <p>
+                <code>/spec:create</code>
+                guides you through requirements → design → tasks with approval
+                gates.
+                <code>/spec:implement</code>
+                loads context and tracks progress.
+                <code>/spec:review</code>
+                validates completeness and quality.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>Output Style Transformation</h3>
+              <p>
+                The spec-driven output style changes how Claude behaves -
+                emphasizing planning, systematic workflows, and test-driven
+                development across all interactions.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>CLI Tooling</h3>
+              <p>
+                <code>ck init</code>
+                sets up your project.
+                <code>ck doctor</code>
+                validates configuration.
+                <code>ck hook</code>
+                manages custom automation.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>TodoWrite Integration</h3>
+              <p>
+                Task tracking is built into the workflow. Claude maintains a
+                todo list synchronized with spec tasks.
+              </p>
+            </div>
+          </div>
+
+          <h2>Philosophical Foundation</h2>
+
+          <p>
+            Claude Kiro implements the spec-driven methodology from
+            <a
+              href="https://kiro.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Kiro.dev
+            </a>
+            , adapted for Claude Code workflows.
+          </p>
+
+          <p>The methodology is based on principles from:</p>
+
+          <ul>
+            <li>
+              <strong>Test-Driven Development (TDD)</strong>
+              - Write tests first, implement to pass
+            </li>
+            <li>
+              <strong>Domain-Driven Design (DDD)</strong>
+              - Model software around business concepts
+            </li>
+            <li>
+              <strong>Documentation as Code</strong>
+              - Keep docs close to implementation
+            </li>
+            <li>
+              <strong>Agile Principles</strong>
+              - Iterative development with quick feedback
+            </li>
+          </ul>
+
+          <div class="callout callout-info">
+            <strong>Learn More:</strong>
+            Visit
+            <a
+              href="https://kiro.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Kiro.dev
+            </a>
+            to dive deeper into the methodology philosophy and advanced
+            patterns.
+          </div>
+
+          <h2>Next Steps</h2>
+
+          <p>Now that you understand the methodology:</p>
+
+          <div class="hero-actions" style="justify-content: flex-start">
+            <a href="/commands.html" class="btn btn-primary">
+              Learn Slash Commands
+            </a>
+            <a href="/examples.html" class="btn btn-outline">See Examples</a>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Framework JS -->
+    <script src="/assets/js/kiro.js"></script>
+  </body>
+</html>

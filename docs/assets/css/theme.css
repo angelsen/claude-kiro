@@ -1,0 +1,81 @@
+/* Kiro Documentation Theme - CSS Custom Properties */
+
+:root {
+  /* Colors - HSL for easy manipulation */
+  --background: 222.2 84% 4.9%; /* Dark background */
+  --foreground: 210 40% 98%; /* Light text */
+  --card: 222.2 84% 4.9%; /* Card backgrounds */
+  --card-foreground: 210 40% 98%; /* Card text */
+
+  --primary: 262.1 83.3% 57.8%; /* Purple accent */
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 217.2 32.6% 17.5%; /* Muted backgrounds */
+  --secondary-foreground: 210 40% 98%;
+
+  --muted: 217.2 32.6% 17.5%; /* Muted elements */
+  --muted-foreground: 215 20.2% 65.1%;
+
+  --accent: 217.2 32.6% 17.5%; /* Accent elements */
+  --accent-foreground: 210 40% 98%;
+
+  --destructive: 0 84.2% 60.2%; /* Error states */
+  --border: 217.2 32.6% 17.5%; /* Borders */
+  --input: 217.2 32.6% 17.5%; /* Form inputs */
+  --ring: 262.1 83.3% 57.8%; /* Focus rings */
+
+  /* Spacing */
+  --radius: 0.5rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Typography */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+  --font-mono: "SF Mono", "Monaco", "Inconsolata", "Fira Code", monospace;
+
+  /* Font sizes */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+
+  /* Line heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+}
+
+/* Future light theme support */
+[data-theme="light"] {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+
+  --primary: 262.1 83.3% 57.8%;
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+
+  --border: 214.3 31.8% 91.4%;
+}

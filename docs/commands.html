@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Slash commands reference for Claude Kiro - /spec:create, /spec:implement, /spec:review"
+    />
+    <meta name="author" content="Claude Kiro" />
+    <title>Slash Commands - Claude Kiro</title>
+
+    <!-- Framework CSS -->
+    <link rel="stylesheet" href="/assets/css/theme.css" />
+    <link rel="stylesheet" href="/assets/css/kiro.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="container nav-container">
+        <a href="/" class="nav-brand">
+          <img
+            src="/assets/img/ghost-icon.svg"
+            alt="Claude Kiro"
+            class="nav-logo"
+          />
+          <span>Claude Kiro</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="nav-links">
+          <a href="/getting-started.html">Docs</a>
+          <a href="/methodology.html">Methodology</a>
+          <a
+            href="https://github.com/angelsen/claude-kiro"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
+
+        <!-- Mobile Toggle -->
+        <button class="nav-toggle" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div class="nav-mobile">
+        <a href="/getting-started.html">Getting Started</a>
+        <a href="/methodology.html">Methodology</a>
+        <a href="/cli.html">CLI Reference</a>
+        <a href="/commands.html" class="active">Slash Commands</a>
+        <a href="/examples.html">Examples</a>
+        <a
+          href="https://github.com/angelsen/claude-kiro"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="docs-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <nav aria-label="Documentation navigation">
+            <div class="sidebar-section">
+              <h4>Introduction</h4>
+              <ul>
+                <li><a href="/getting-started.html">Getting Started</a></li>
+                <li><a href="/methodology.html">Methodology</a></li>
+              </ul>
+            </div>
+
+            <div class="sidebar-section">
+              <h4>Reference</h4>
+              <ul>
+                <li><a href="/cli.html">CLI Commands</a></li>
+                <li>
+                  <a href="/commands.html" class="active">Slash Commands</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="sidebar-section">
+              <h4>Guides</h4>
+              <ul>
+                <li><a href="/examples.html">Examples</a></li>
+              </ul>
+            </div>
+          </nav>
+        </aside>
+
+        <!-- Page Content -->
+        <main class="content">
+          <h1>Slash Commands</h1>
+
+          <p class="text-muted">
+            Powerful slash commands for spec-driven development in Claude Code.
+          </p>
+
+          <div class="callout callout-info">
+            <strong>Prerequisites:</strong>
+            Make sure you've run
+            <code>ck init</code>
+            in your project to install the slash commands.
+          </div>
+
+          <h2>/spec:create</h2>
+
+          <p>Create a new structured specification with a 3-phase workflow.</p>
+
+          <div class="code-block">
+            <code>/spec:create [feature-description]</code>
+          </div>
+
+          <h3>The 3-Phase Workflow</h3>
+
+          <div class="card-grid-1">
+            <div class="card">
+              <h4>Phase 1: Requirements</h4>
+              <p>
+                Claude generates
+                <code>requirements.md</code>
+                with:
+              </p>
+              <ul
+                style="margin-left: var(--space-6); margin-top: var(--space-2)"
+              >
+                <li>User stories and acceptance criteria</li>
+                <li>
+                  EARS notation requirements (WHEN... THE SYSTEM SHALL...)
+                </li>
+                <li>Non-functional requirements</li>
+                <li>Constraints and out-of-scope items</li>
+              </ul>
+              <p style="margin-top: var(--space-3)">
+                <strong>Approval Gate:</strong>
+                Claude presents requirements using ExitPlanMode. You review and
+                approve before proceeding to design.
+              </p>
+            </div>
+
+            <div class="card">
+              <h4>Phase 2: Design</h4>
+              <p>
+                Claude creates
+                <code>design.md</code>
+                with:
+              </p>
+              <ul
+                style="margin-left: var(--space-6); margin-top: var(--space-2)"
+              >
+                <li>Architecture overview and component analysis</li>
+                <li>Data models and interfaces</li>
+                <li>Component specifications</li>
+                <li>Testing strategy and performance considerations</li>
+              </ul>
+              <p style="margin-top: var(--space-3)">
+                <strong>Approval Gate:</strong>
+                Another ExitPlanMode checkpoint. Review the design before task
+                breakdown.
+              </p>
+            </div>
+
+            <div class="card">
+              <h4>Phase 3: Tasks</h4>
+              <p>
+                Claude generates
+                <code>tasks.md</code>
+                with:
+              </p>
+              <ul
+                style="margin-left: var(--space-6); margin-top: var(--space-2)"
+              >
+                <li>Specific implementation tasks</li>
+                <li>Clear acceptance criteria for each task</li>
+                <li>Task dependencies and complexity estimates</li>
+                <li>Testing checklist</li>
+              </ul>
+              <p style="margin-top: var(--space-3)">
+                <strong>Final Approval:</strong>
+                Review the task breakdown. Once approved, you're ready to
+                implement!
+              </p>
+            </div>
+          </div>
+
+          <h3>Examples</h3>
+
+          <div class="code-block">
+            <pre><code># Create a new feature spec
+/spec:create user-authentication
+
+# Create a spec for a specific component
+/spec:create email-notification-system
+
+# Evolve an existing spec
+/spec:create improved-authentication-v2</code></pre>
+          </div>
+
+          <h3>Evolution Support</h3>
+
+          <p>
+            When creating a spec that evolves from an existing one, Claude
+            automatically:
+          </p>
+
+          <ul>
+            <li>Finds and reads the original spec</li>
+            <li>Includes a "Specification Heritage" section</li>
+            <li>Updates the original spec's status to "EVOLVED"</li>
+            <li>
+              Creates an
+              <code>evolution.md</code>
+              documenting the transition
+            </li>
+            <li>Preserves what worked, explains what changed</li>
+          </ul>
+
+          <hr
+            style="
+              margin: var(--space-8) 0;
+              border: 0;
+              border-top: 1px solid hsl(var(--border));
+            "
+          />
+
+          <h2>/spec:implement</h2>
+
+          <p>
+            Implement tasks from a specification with context loading and
+            TodoWrite tracking.
+          </p>
+
+          <div class="code-block">
+            <code>/spec:implement [spec-directory]</code>
+          </div>
+
+          <h3>What It Does</h3>
+
+          <ol>
+            <li>
+              <strong>Loads Spec Context:</strong>
+              Reads requirements.md, design.md, and tasks.md to understand the
+              complete specification.
+            </li>
+            <li>
+              <strong>Creates TodoWrite Tasks:</strong>
+              Converts spec tasks into a tracked todo list.
+            </li>
+            <li>
+              <strong>Guides Implementation:</strong>
+              Works through tasks systematically, following test-driven
+              development practices.
+            </li>
+            <li>
+              <strong>Verifies Acceptance:</strong>
+              Checks that all acceptance criteria are met before marking tasks
+              complete.
+            </li>
+            <li>
+              <strong>Updates Spec:</strong>
+              Marks tasks as complete in tasks.md as you progress.
+            </li>
+          </ol>
+
+          <h3>Examples</h3>
+
+          <div class="code-block">
+            <pre><code># Implement a specific spec
+/spec:implement .claude/specs/user-authentication
+
+# Continue working on a partially completed spec
+/spec:implement .claude/specs/email-notifications</code></pre>
+          </div>
+
+          <h3>Hook Integration</h3>
+
+          <p>
+            If you have the
+            <code>spec_task_context</code>
+            hook configured, it will automatically inject spec context when you
+            use file editing tools (Write, Edit). This reminds Claude of:
+          </p>
+
+          <ul>
+            <li>Which spec task you're working on</li>
+            <li>Acceptance criteria to verify</li>
+            <li>How to update tasks.md when complete</li>
+          </ul>
+
+          <hr
+            style="
+              margin: var(--space-8) 0;
+              border: 0;
+              border-top: 1px solid hsl(var(--border));
+            "
+          />
+
+          <h2>/spec:review</h2>
+
+          <p>
+            Review a specification for completeness, quality, and alignment with
+            methodology.
+          </p>
+
+          <div class="code-block">
+            <code>/spec:review [spec-directory]</code>
+          </div>
+
+          <h3>Review Criteria</h3>
+
+          <div class="card-grid-1">
+            <div class="card">
+              <h4>Requirements</h4>
+              <ul
+                style="
+                  margin: var(--space-2) 0 0 var(--space-6);
+                  font-size: var(--text-sm);
+                "
+              >
+                <li>All requirements use EARS notation</li>
+                <li>Edge cases covered</li>
+                <li>Acceptance criteria clear and testable</li>
+                <li>Non-functional requirements defined</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h4>Design</h4>
+              <ul
+                style="
+                  margin: var(--space-2) 0 0 var(--space-6);
+                  font-size: var(--text-sm);
+                "
+              >
+                <li>Architecture is sound</li>
+                <li>Data models are complete</li>
+                <li>Testing strategy defined</li>
+                <li>Performance considered</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h4>Tasks</h4>
+              <ul
+                style="
+                  margin: var(--space-2) 0 0 var(--space-6);
+                  font-size: var(--text-sm);
+                "
+              >
+                <li>Tasks are specific and actionable</li>
+                <li>Dependencies are clear</li>
+                <li>Acceptance criteria match requirements</li>
+                <li>Complexity is estimated</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>Example</h3>
+
+          <div class="code-block">
+            <code>/spec:review .claude/specs/user-authentication</code>
+          </div>
+
+          <h3>Output</h3>
+
+          <p>The review provides a detailed report with:</p>
+
+          <ul>
+            <li>✅ What's good and complete</li>
+            <li>⚠️ Potential issues or gaps</li>
+            <li>💡 Suggestions for improvement</li>
+            <li>📝 Recommended next steps</li>
+          </ul>
+
+          <h2>Integration with TodoWrite</h2>
+
+          <p>
+            All slash commands work seamlessly with Claude's TodoWrite tool:
+          </p>
+
+          <ul>
+            <li>
+              <code>/spec:create</code>
+              creates todos for each phase
+            </li>
+            <li>
+              <code>/spec:implement</code>
+              loads spec tasks into TodoWrite
+            </li>
+            <li>Claude updates todo status as you work</li>
+            <li>
+              Tasks are marked complete only when all acceptance criteria pass
+            </li>
+          </ul>
+
+          <div class="callout callout-info">
+            <strong>Pro Tip:</strong>
+            You can see your todo list at any time by asking Claude "What's on
+            my todo list?" or "Show me task progress."
+          </div>
+
+          <h2>Best Practices</h2>
+
+          <div class="card-grid-1">
+            <div class="card">
+              <h4>✅ Do</h4>
+              <ul style="margin: var(--space-2) 0 0 var(--space-6)">
+                <li>Review and approve each phase before proceeding</li>
+                <li>Ask questions if requirements aren't clear</li>
+                <li>Request changes to the spec before implementation</li>
+                <li>Use descriptive spec names (feature-focused)</li>
+                <li>
+                  Run
+                  <code>/spec:review</code>
+                  before implementing
+                </li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h4>❌ Don't</h4>
+              <ul style="margin: var(--space-2) 0 0 var(--space-6)">
+                <li>Skip approval gates - they catch issues early</li>
+                <li>Implement without a complete spec</li>
+                <li>Modify requirements during implementation</li>
+                <li>Mark tasks complete if acceptance criteria fail</li>
+                <li>Delete old specs - mark them as EVOLVED instead</li>
+              </ul>
+            </div>
+          </div>
+
+          <h2>Next Steps</h2>
+
+          <div class="hero-actions" style="justify-content: flex-start">
+            <a href="/examples.html" class="btn btn-primary">See Examples</a>
+            <a href="/getting-started.html" class="btn btn-outline">
+              Getting Started
+            </a>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Framework JS -->
+    <script src="/assets/js/kiro.js"></script>
+  </body>
+</html>

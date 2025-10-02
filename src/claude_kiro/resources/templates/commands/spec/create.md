@@ -1,7 +1,7 @@
 ---
 description: Create a structured specification (requirements → design → tasks)
 argument-hint: [feature-description]
-allowed-tools: Read, Write, Grep, Glob, TodoWrite
+allowed-tools: Read, Write, Grep, Glob, TodoWrite, ExitPlanMode
 model: claude-sonnet-4-5-20250929
 ---
 

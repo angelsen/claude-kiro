@@ -1,14 +1,16 @@
-# Spec-Driven Development for Claude Code
+# Claude Kiro: Spec-Driven Development for Claude Code
 
-Configuration files and methodology to bring Kiro's structured development workflow to Claude Code.
+A unified CLI tool and methodology that brings spec-driven development workflow to Claude Code.
 
 ## What This Is
 
-A set of Claude Code configurations (output styles, slash commands, hooks) that implement spec-driven development:
+Claude Kiro (`ck`) provides:
+- **Automated project setup** for spec-driven development
+- **Smart hooks** that provide spec context while coding
+- **Slash commands** for structured workflows
+- **Output styles** that enforce disciplined responses
 
 **Prompt → Requirements → Design → Tasks → Implementation**
-
-No external tools. Pure Claude Code primitives.
 
 ## Repository Structure
 
@@ -28,28 +30,90 @@ No external tools. Pure Claude Code primitives.
 
 ## Quick Start
 
-See `synthesis/phase1-implementation.md` for complete setup (5 config files, 4-6 hours).
+```bash
+# Install Claude Kiro globally
+uv tool install claude-kiro
 
-**Core files to create:**
-- `.claude/commands/spec/create.md` - Requirements → Design → Tasks workflow
-- `.claude/commands/spec/implement.md` - Task-by-task implementation
+# Initialize your project
+cd your-project
+ck init
+
+# Verify setup
+ck doctor
+```
+
+That's it! Your project is now configured for spec-driven development.
+
+## Installation
+
+### Install Claude Kiro (Global Tool)
+
+```bash
+# Install from PyPI
+uv tool install claude-kiro
+
+# Or install from source in editable mode
+git clone https://github.com/angelsen/claude-kiro.git
+cd claude-kiro
+uv tool install . --editable
+```
+
+This installs the `ck` command globally, which provides:
+- `ck init` - Set up a project for spec-driven development
+- `ck doctor` - Verify your setup is working
+- `ck hook` - Manage Claude Code hook integration
+- `ck --hook` - Hook runner for Claude Code (hidden command)
+
+### Initialize Your Project
+
+```bash
+cd your-project
+ck init
+```
+
+This creates:
 - `.claude/output-styles/spec-driven.md` - Enforces structured responses
-- `.claude/CLAUDE.md` - Project context (optional)
+- `.claude/commands/spec/` - Slash commands for specs
+- `.claude/settings.local.json` - Hook configuration
+- `.claude/CLAUDE.md` - Project context template
+
+### What the Hooks Do
+
+The hooks provide intelligent spec context:
+- **When editing spec files:** Shows which task you're implementing
+- **When editing new files:** Suggests creating a spec first
+- **Smart caching:** Shows messages only once per file per session (no spam!)
 
 ## How It Works
 
-1. **`/spec-create "feature"`** - Generate requirements (EARS notation), design, and tasks
-2. **TodoWrite** - Tracks implementation progress automatically
-3. **`/spec-implement 1`** - Execute tasks with full context
-4. **Hooks** (Phase 2) - Keep specs synced with code changes
+1. **Initialize:** `ck init` sets up your project with all necessary files
+2. **Create specs:** `/spec:create "feature"` - Generate requirements, design, and tasks
+3. **Implement:** `/spec:implement task` - Execute tasks with full context
+4. **Track progress:** TodoWrite tracks implementation automatically
+5. **Stay aligned:** Hooks provide context and maintain spec-driven discipline
 
-## Key Insights
+## CLI Commands Reference
 
-- **92% feature parity** with Kiro using Claude Code primitives
+### Main Commands
+- `ck init [--force]` - Initialize a project with spec-driven setup
+- `ck doctor` - Check your Claude Kiro setup health
+- `ck hook list` - Show available hooks
+- `ck hook status` - Display configured hooks
+- `ck hook test <name>` - Test a hook with sample data
+- `ck hook config` - Generate settings.json configuration
+
+### Claude Code Slash Commands (Created by `ck init`)
+- `/spec:create <feature>` - Create a new specification
+- `/spec:implement <task>` - Implement a spec task
+- `/spec:review <spec>` - Review an existing spec
+
+## Key Features
+
 - **EARS notation** for testable requirements: `WHEN [condition] THE SYSTEM SHALL [behavior]`
 - **3-phase workflow** with approval gates between phases
 - **TodoWrite integration** for native task tracking
-- **No custom code** - pure configuration
+- **Smart hook context** that tracks what you're working on
+- **Zero configuration** after running `ck init`
 
 ## Documentation Sources
 
@@ -60,10 +124,11 @@ All research extracted from local scraped docs:
 
 ## Implementation Status
 
-- ✅ Research complete (10 docs)
-- ✅ Synthesis complete (feature mapping + Phase 1 plan)
-- ⏳ Phase 1 implementation (pending)
-- ⏳ Phase 2 automation (pending)
+- ✅ CLI tool (`ck`) - Complete with all commands
+- ✅ Hook system - Smart context injection working
+- ✅ Slash commands - `/spec:create`, `/spec:implement`, `/spec:review`
+- ✅ Output styles - Spec-driven responses enforced
+- ✅ Project setup automation - `ck init` configures everything
 
 ## Why This Exists
 

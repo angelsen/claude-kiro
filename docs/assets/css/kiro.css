@@ -1,0 +1,675 @@
+/* Kiro Documentation Framework - Main Styles */
+
+/* ===== 1. CSS Reset & Base ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Subtle ambient glow background */
+body::before {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background:
+    radial-gradient(
+      ellipse at 20% 30%,
+      hsla(262, 83%, 58%, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 70%,
+      hsla(217, 33%, 18%, 0.12) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 50% 50%,
+      hsla(262, 83%, 58%, 0.05) 0%,
+      transparent 60%
+    );
+  animation: ambientGlow 30s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== 2. Typography ===== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-4);
+}
+
+h1 {
+  font-size: var(--text-4xl);
+}
+h2 {
+  font-size: var(--text-3xl);
+}
+h3 {
+  font-size: var(--text-2xl);
+}
+h4 {
+  font-size: var(--text-xl);
+}
+h5 {
+  font-size: var(--text-lg);
+}
+h6 {
+  font-size: var(--text-base);
+}
+
+p {
+  margin-bottom: var(--space-4);
+  line-height: var(--leading-relaxed);
+}
+
+a {
+  color: hsl(var(--primary));
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  background: hsl(var(--muted));
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+}
+
+/* ===== 3. Layout Components ===== */
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: var(--space-4);
+  padding-left: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+.docs-layout {
+  display: grid;
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+}
+
+@media (min-width: 1024px) {
+  .docs-layout {
+    grid-template-columns: 240px 1fr;
+  }
+}
+
+/* ===== 4. Navigation ===== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: hsl(var(--background) / 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  color: hsl(var(--foreground));
+}
+
+.nav-logo {
+  width: 2rem;
+  height: 2rem;
+}
+
+.nav-links {
+  display: none;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+  }
+}
+
+.nav-links a {
+  color: hsl(var(--muted-foreground));
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: hsl(var(--foreground));
+}
+
+.nav-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .nav-toggle {
+    display: none;
+  }
+}
+
+.nav-toggle span {
+  display: block;
+  width: 1.5rem;
+  height: 2px;
+  background: hsl(var(--foreground));
+  transition: all 0.3s;
+}
+
+.nav-mobile {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-top: 1px solid hsl(var(--border));
+}
+
+.nav-mobile.active {
+  display: flex;
+}
+
+@media (min-width: 768px) {
+  .nav-mobile {
+    display: none !important;
+  }
+}
+
+.nav-mobile a {
+  color: hsl(var(--muted-foreground));
+  padding: var(--space-2);
+  border-radius: var(--radius);
+  transition: all 0.2s;
+}
+
+.nav-mobile a:hover,
+.nav-mobile a.active {
+  color: hsl(var(--foreground));
+  background: hsl(var(--muted));
+}
+
+/* ===== 5. Sidebar ===== */
+.sidebar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    display: block;
+    position: sticky;
+    top: 5rem;
+    height: calc(100vh - 5rem);
+    overflow-y: auto;
+    padding-right: var(--space-4);
+  }
+}
+
+.sidebar-section {
+  margin-bottom: var(--space-6);
+}
+
+.sidebar-section h4 {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-bottom: var(--space-3);
+  color: hsl(var(--foreground));
+}
+
+.sidebar-section ul {
+  list-style: none;
+}
+
+.sidebar-section li {
+  margin-bottom: var(--space-2);
+}
+
+.sidebar-section a {
+  display: block;
+  font-size: var(--text-sm);
+  color: hsl(var(--muted-foreground));
+  padding: var(--space-2);
+  border-radius: var(--radius);
+  transition: all 0.2s;
+}
+
+.sidebar-section a:hover,
+.sidebar-section a.active {
+  color: hsl(var(--foreground));
+  background: hsl(var(--muted));
+}
+
+/* ===== 6. Cards ===== */
+.card {
+  border-radius: var(--radius);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  padding: var(--space-6);
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px hsl(var(--primary) / 0.1);
+}
+
+.card h3 {
+  margin-bottom: var(--space-3);
+}
+
+.card-grid {
+  display: grid;
+  gap: var(--space-6);
+  margin: var(--space-8) 0;
+}
+
+@media (min-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Single column override for complex content */
+.card-grid-1 {
+  display: grid;
+  gap: var(--space-6);
+  margin: var(--space-8) 0;
+  grid-template-columns: 1fr;
+}
+
+/* ===== 7. Buttons ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  padding: var(--space-2) var(--space-4);
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+  gap: var(--space-2);
+}
+
+.btn-primary {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-outline {
+  border: 1px solid hsl(var(--border));
+  background: transparent;
+  color: hsl(var(--foreground));
+}
+
+.btn-outline:hover {
+  background: hsl(var(--muted));
+}
+
+.btn-ghost {
+  background: transparent;
+  color: hsl(var(--foreground));
+}
+
+.btn-ghost:hover {
+  background: hsl(var(--muted));
+}
+
+.btn-lg {
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-base);
+}
+
+.btn-sm {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+}
+
+/* ===== 8. Code Blocks ===== */
+.code-block {
+  position: relative;
+  background: hsl(var(--muted));
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  margin: var(--space-4) 0;
+  overflow-x: auto;
+}
+
+.code-block pre {
+  margin: 0;
+  overflow-x: auto;
+}
+
+.code-block pre code {
+  background: transparent;
+  padding: 0;
+  white-space: pre;
+  display: block;
+}
+
+.code-block code {
+  background: transparent;
+  white-space: pre-wrap;
+  display: block;
+}
+
+.code-copy {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.code-copy:hover {
+  background: hsl(var(--muted));
+}
+
+/* ===== 9. Tabs ===== */
+.tabs {
+  margin: var(--space-6) 0;
+}
+
+.tab-list {
+  display: flex;
+  gap: var(--space-2);
+  border-bottom: 1px solid hsl(var(--border));
+  margin-bottom: var(--space-4);
+}
+
+.tab-button {
+  background: transparent;
+  border: none;
+  color: hsl(var(--muted-foreground));
+  font-size: var(--text-sm);
+  font-weight: 500;
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab-button:hover {
+  color: hsl(var(--foreground));
+}
+
+.tab-button.active {
+  color: hsl(var(--primary));
+  border-bottom-color: hsl(var(--primary));
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+/* ===== 10. Callouts ===== */
+.callout {
+  border-radius: var(--radius);
+  border: 1px solid hsl(var(--border));
+  padding: var(--space-4);
+  margin: var(--space-4) 0;
+}
+
+.callout-info {
+  border-left: 4px solid hsl(var(--primary));
+  background: hsl(var(--primary) / 0.1);
+}
+
+.callout-warning {
+  border-left: 4px solid hsl(45 93% 47%);
+  background: hsl(45 93% 47% / 0.1);
+}
+
+.callout-error {
+  border-left: 4px solid hsl(var(--destructive));
+  background: hsl(var(--destructive) / 0.1);
+}
+
+/* ===== 11. Content ===== */
+.content {
+  max-width: 65ch;
+  padding-bottom: var(--space-16);
+}
+
+.content > * + * {
+  margin-top: var(--space-4);
+}
+
+.content ul,
+.content ol {
+  margin-left: var(--space-6);
+  margin-bottom: var(--space-4);
+}
+
+.content li {
+  margin-bottom: var(--space-2);
+}
+
+/* ===== 12. Hero Section ===== */
+.hero {
+  text-align: center;
+  padding: var(--space-16) 0;
+}
+
+.hero h1 {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .hero h1 {
+    font-size: 3rem;
+  }
+}
+
+.hero p {
+  font-size: var(--text-lg);
+  color: hsl(var(--muted-foreground));
+  max-width: 60ch;
+  margin: 0 auto var(--space-6);
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ===== 13. Utility Classes ===== */
+.text-muted {
+  color: hsl(var(--muted-foreground));
+}
+
+.text-primary {
+  color: hsl(var(--primary));
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-0 {
+  margin-top: 0;
+}
+.mt-2 {
+  margin-top: var(--space-2);
+}
+.mt-4 {
+  margin-top: var(--space-4);
+}
+.mt-6 {
+  margin-top: var(--space-6);
+}
+.mt-8 {
+  margin-top: var(--space-8);
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+.mb-2 {
+  margin-bottom: var(--space-2);
+}
+.mb-4 {
+  margin-bottom: var(--space-4);
+}
+.mb-6 {
+  margin-bottom: var(--space-6);
+}
+.mb-8 {
+  margin-bottom: var(--space-8);
+}
+
+/* ===== 14. Accessibility ===== */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* ===== 15. Animations ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Ambient glow animation */
+@keyframes ambientGlow {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  33% {
+    transform: translate(5%, 5%) rotate(120deg);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translate(-5%, 3%) rotate(240deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(0, 0) rotate(360deg);
+    opacity: 1;
+  }
+}

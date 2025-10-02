@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Complete CLI reference for Claude Kiro - ck commands, options, and examples"
+    />
+    <meta name="author" content="Claude Kiro" />
+    <title>CLI Reference - Claude Kiro</title>
+
+    <!-- Framework CSS -->
+    <link rel="stylesheet" href="/assets/css/theme.css" />
+    <link rel="stylesheet" href="/assets/css/kiro.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="container nav-container">
+        <a href="/" class="nav-brand">
+          <img
+            src="/assets/img/ghost-icon.svg"
+            alt="Claude Kiro"
+            class="nav-logo"
+          />
+          <span>Claude Kiro</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="nav-links">
+          <a href="/getting-started.html">Docs</a>
+          <a href="/methodology.html">Methodology</a>
+          <a
+            href="https://github.com/angelsen/claude-kiro"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
+
+        <!-- Mobile Toggle -->
+        <button class="nav-toggle" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div class="nav-mobile">
+        <a href="/getting-started.html">Getting Started</a>
+        <a href="/methodology.html">Methodology</a>
+        <a href="/cli.html" class="active">CLI Reference</a>
+        <a href="/commands.html">Slash Commands</a>
+        <a href="/examples.html">Examples</a>
+        <a
+          href="https://github.com/angelsen/claude-kiro"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="docs-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <nav aria-label="Documentation navigation">
+            <div class="sidebar-section">
+              <h4>Introduction</h4>
+              <ul>
+                <li><a href="/getting-started.html">Getting Started</a></li>
+                <li><a href="/methodology.html">Methodology</a></li>
+              </ul>
+            </div>
+
+            <div class="sidebar-section">
+              <h4>Reference</h4>
+              <ul>
+                <li><a href="/cli.html" class="active">CLI Commands</a></li>
+                <li><a href="/commands.html">Slash Commands</a></li>
+              </ul>
+            </div>
+
+            <div class="sidebar-section">
+              <h4>Guides</h4>
+              <ul>
+                <li><a href="/examples.html">Examples</a></li>
+              </ul>
+            </div>
+          </nav>
+        </aside>
+
+        <!-- Page Content -->
+        <main class="content">
+          <h1>CLI Reference</h1>
+
+          <p class="text-muted">
+            Complete reference for the
+            <code>ck</code>
+            command-line tool.
+          </p>
+
+          <h2>Installation</h2>
+
+          <div class="tabs">
+            <div class="tab-list" role="tablist">
+              <button class="tab-button active" role="tab" aria-selected="true">
+                uv (Recommended)
+              </button>
+              <button class="tab-button" role="tab" aria-selected="false">
+                pip
+              </button>
+            </div>
+            <div class="tab-panel active" role="tabpanel">
+              <div class="code-block">
+                <code>uv tool install claude-kiro</code>
+              </div>
+            </div>
+            <div class="tab-panel" role="tabpanel" hidden>
+              <div class="code-block">
+                <code>pip install claude-kiro</code>
+              </div>
+            </div>
+          </div>
+
+          <h2>Core Commands</h2>
+
+          <h3 id="init"><code>ck init</code></h3>
+
+          <p>Initialize a Claude Kiro project in the current directory.</p>
+
+          <div class="code-block">
+            <code>ck init [OPTIONS]</code>
+          </div>
+
+          <h4>Options</h4>
+
+          <ul>
+            <li>
+              <code>--force</code>
+              - Overwrite existing files if they already exist
+            </li>
+          </ul>
+
+          <h4>What It Does</h4>
+
+          <p>Creates the following structure in your project:</p>
+
+          <div class="code-block">
+            <pre><code>.claude/
+├── commands/spec/
+│   ├── create.md
+│   ├── implement.md
+│   └── review.md
+├── output-styles/
+│   └── spec-driven.md
+├── specs/
+│   └── (your specs will go here)
+└── CLAUDE.md</code></pre>
+          </div>
+
+          <h4>Example</h4>
+
+          <div class="code-block">
+            <pre><code># Initialize in current project
+ck init
+
+# Force overwrite existing configuration
+ck init --force</code></pre>
+          </div>
+
+          <h4>Output</h4>
+
+          <div class="code-block">
+            <pre><code>✅ Created .claude directory
+✅ Installed slash commands
+✅ Configured spec-driven output style
+✅ Created specs directory
+✅ Generated CLAUDE.md
+
+🎉 Claude Kiro initialized! Run 'ck doctor' to verify.</code></pre>
+          </div>
+
+          <hr
+            style="
+              margin: var(--space-8) 0;
+              border: 0;
+              border-top: 1px solid hsl(var(--border));
+            "
+          />
+
+          <h3 id="doctor"><code>ck doctor</code></h3>
+
+          <p>Validate your Claude Kiro setup and check for issues.</p>
+
+          <div class="code-block">
+            <code>ck doctor</code>
+          </div>
+
+          <h4>What It Checks</h4>
+
+          <ul>
+            <li>
+              Claude Code configuration exists (
+              <code>.claude/</code>
+              directory)
+            </li>
+            <li>All required directories are present</li>
+            <li>Slash commands are properly configured</li>
+            <li>Output style is active</li>
+            <li>Spec directory structure is valid</li>
+          </ul>
+
+          <h4>Example</h4>
+
+          <div class="code-block">
+            <code>ck doctor</code>
+          </div>
+
+          <h4>Output</h4>
+
+          <div class="code-block">
+            <pre><code>🏥 Running Claude Kiro health check...
+
+✅ .claude directory exists
+✅ Slash commands configured
+✅ Output style active
+✅ Specs directory present
+✅ CLAUDE.md found
+
+✨ Everything looks good!</code></pre>
+          </div>
+
+          <hr
+            style="
+              margin: var(--space-8) 0;
+              border: 0;
+              border-top: 1px solid hsl(var(--border));
+            "
+          />
+
+          <h2>Hook Commands</h2>
+
+          <p>
+            The
+            <code>ck hook</code>
+            command group helps you manage custom hooks for integrating Claude
+            Code with your Claude Kiro specs.
+          </p>
+
+          <h3 id="hook-list"><code>ck hook list</code></h3>
+
+          <p>List all available hook modules in the Claude Kiro package.</p>
+
+          <div class="code-block">
+            <code>ck hook list</code>
+          </div>
+
+          <h4>Output</h4>
+
+          <div class="code-block">
+            <pre><code>📦 Available Hook Modules:
+
+spec_task_context
+  - Inject spec context for implementation tasks
+  Location: claude_kiro.hooks.spec_task_context
+
+Use 'ck hook config' to generate settings.json configuration.</code></pre>
+          </div>
+
+          <hr
+            style="
+              margin: var(--space-6) 0;
+              border: 0;
+              border-top: 1px solid hsl(var(--border));
+            "
+          />
+
+          <h3 id="hook-status"><code>ck hook status</code></h3>
+
+          <p>Show which hooks are currently configured in your project.</p>
+
+          <div class="code-block">
+            <code>ck hook status</code>
+          </div>
+
+          <h4>Output</h4>
+
+          <div class="code-block">
+            <pre><code>📋 Hook Status (.claude/settings.local.json):
+
+✅ spec_task_context
+   Events: post-tool-use (Write, Edit, MultiEdit)
+   Module: claude_kiro.hooks.spec_task_context:post_tool_use_hook</code></pre>
+          </div>
+
+          <hr
+            style="
+              margin: var(--space-6) 0;
+              border: 0;
+              border-top: 1px solid hsl(var(--border));
+            "
+          />
+
+          <h3 id="hook-test"><code>ck hook test</code></h3>
+
+          <p>Test a hook with sample or real data.</p>
+
+          <div class="code-block">
+            <code>ck hook test &lt;name&gt; [json_file]</code>
+          </div>
+
+          <h4>Arguments</h4>
+
+          <ul>
+            <li>
+              <code>name</code>
+              - Hook name (e.g.,
+              <code>spec_task_context</code>
+              )
+            </li>
+            <li>
+              <code>json_file</code>
+              - Optional path to JSON file with test data
+            </li>
+          </ul>
+
+          <h4>Examples</h4>
+
+          <div class="code-block">
+            <pre><code># Test with sample data
+ck hook test spec_task_context
+
+# Test with real tool event
+ck hook test spec_task_context /path/to/tool-event.json</code></pre>
+          </div>
+
+          <h4>Output</h4>
+
+          <div class="code-block">
+            <pre><code>🧪 Testing hook: spec_task_context
+Using sample data for: Write
+
+📤 Hook Response:
+{
+  "message": "📋 **Spec Task Context: example-spec**\n\nYou are working on Task 1: Example task\n..."
+}
+
+✅ Hook executed successfully!</code></pre>
+          </div>
+
+          <hr
+            style="
+              margin: var(--space-6) 0;
+              border: 0;
+              border-top: 1px solid hsl(var(--border));
+            "
+          />
+
+          <h3 id="hook-config"><code>ck hook config</code></h3>
+
+          <p>Generate settings.json snippet for configuring hooks.</p>
+
+          <div class="code-block">
+            <code>ck hook config</code>
+          </div>
+
+          <h4>Output</h4>
+
+          <div class="code-block">
+            <pre><code>📋 Add this to your .claude/settings.local.json:
+
+{
+  "hooks": {
+    "post-tool-use": [
+      {
+        "module": "claude_kiro.hooks.spec_task_context",
+        "function": "post_tool_use_hook",
+        "tools": ["Write", "Edit", "MultiEdit"]
+      }
+    ]
+  }
+}</code></pre>
+          </div>
+
+          <h2>Command Reference Summary</h2>
+
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              margin: var(--space-6) 0;
+            "
+          >
+            <thead>
+              <tr style="border-bottom: 1px solid hsl(var(--border))">
+                <th style="text-align: left; padding: var(--space-3)">
+                  Command
+                </th>
+                <th style="text-align: left; padding: var(--space-3)">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid hsl(var(--border))">
+                <td style="padding: var(--space-3)"><code>ck init</code></td>
+                <td style="padding: var(--space-3)">
+                  Initialize Claude Kiro in your project
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid hsl(var(--border))">
+                <td style="padding: var(--space-3)"><code>ck doctor</code></td>
+                <td style="padding: var(--space-3)">
+                  Validate setup and check for issues
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid hsl(var(--border))">
+                <td style="padding: var(--space-3)">
+                  <code>ck hook list</code>
+                </td>
+                <td style="padding: var(--space-3)">
+                  List available hook modules
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid hsl(var(--border))">
+                <td style="padding: var(--space-3)">
+                  <code>ck hook status</code>
+                </td>
+                <td style="padding: var(--space-3)">Show configured hooks</td>
+              </tr>
+              <tr style="border-bottom: 1px solid hsl(var(--border))">
+                <td style="padding: var(--space-3)">
+                  <code>ck hook test</code>
+                </td>
+                <td style="padding: var(--space-3)">
+                  Test a hook with sample data
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: var(--space-3)">
+                  <code>ck hook config</code>
+                </td>
+                <td style="padding: var(--space-3)">
+                  Generate hook configuration
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>Next Steps</h2>
+
+          <div class="hero-actions" style="justify-content: flex-start">
+            <a href="/commands.html" class="btn btn-primary">Slash Commands</a>
+            <a href="/examples.html" class="btn btn-outline">See Examples</a>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Framework JS -->
+    <script src="/assets/js/kiro.js"></script>
+  </body>
+</html>

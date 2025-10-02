@@ -1,6 +1,6 @@
 # Implementation Tasks: GitHub Pages Marketing Site for Claude Kiro
 
-**Status:** ✅ Complete (deployed to docs/)
+**Status:** ✅ Complete (deployed to docs/) → EVOLVED to docs-mini-framework
 **Spec:** [requirements.md](./requirements.md) | [design.md](./design.md)
 
 ## Implementation Deviations

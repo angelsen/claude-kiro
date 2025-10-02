@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Real-world examples and workflows for Claude Kiro spec-driven development"
+    />
+    <meta name="author" content="Claude Kiro" />
+    <title>Examples - Claude Kiro</title>
+
+    <!-- Framework CSS -->
+    <link rel="stylesheet" href="/assets/css/theme.css" />
+    <link rel="stylesheet" href="/assets/css/kiro.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="container nav-container">
+        <a href="/" class="nav-brand">
+          <img
+            src="/assets/img/ghost-icon.svg"
+            alt="Claude Kiro"
+            class="nav-logo"
+          />
+          <span>Claude Kiro</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="nav-links">
+          <a href="/getting-started.html">Docs</a>
+          <a href="/methodology.html">Methodology</a>
+          <a
+            href="https://github.com/angelsen/claude-kiro"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
+
+        <!-- Mobile Toggle -->
+        <button class="nav-toggle" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div class="nav-mobile">
+        <a href="/getting-started.html">Getting Started</a>
+        <a href="/methodology.html">Methodology</a>
+        <a href="/cli.html">CLI Reference</a>
+        <a href="/commands.html">Slash Commands</a>
+        <a href="/examples.html" class="active">Examples</a>
+        <a
+          href="https://github.com/angelsen/claude-kiro"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="docs-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <nav aria-label="Documentation navigation">
+            <div class="sidebar-section">
+              <h4>Introduction</h4>
+              <ul>
+                <li><a href="/getting-started.html">Getting Started</a></li>
+                <li><a href="/methodology.html">Methodology</a></li>
+              </ul>
+            </div>
+
+            <div class="sidebar-section">
+              <h4>Reference</h4>
+              <ul>
+                <li><a href="/cli.html">CLI Commands</a></li>
+                <li><a href="/commands.html">Slash Commands</a></li>
+              </ul>
+            </div>
+
+            <div class="sidebar-section">
+              <h4>Guides</h4>
+              <ul>
+                <li><a href="/examples.html" class="active">Examples</a></li>
+              </ul>
+            </div>
+          </nav>
+        </aside>
+
+        <!-- Page Content -->
+        <main class="content">
+          <h1>Examples & Workflows</h1>
+
+          <p class="text-muted">
+            Learn from real-world examples and see the spec-driven methodology
+            in action.
+          </p>
+
+          <h2>Example 1: Simple Feature</h2>
+
+          <p>
+            Let's walk through creating a user profile feature from start to
+            finish.
+          </p>
+
+          <h3>Step 1: Create the Spec</h3>
+
+          <div class="code-block">
+            <code>/spec:create user-profile-page</code>
+          </div>
+
+          <p>Claude generates requirements with EARS notation:</p>
+
+          <div class="code-block">
+            <pre><code>## User Story
+
+**As a** registered user
+**I want** to view and edit my profile
+**So that** I can keep my information up to date
+
+## Requirements
+
+- WHEN a user navigates to /profile, THE SYSTEM SHALL display their profile information
+- WHEN a user clicks Edit, THE SYSTEM SHALL enable profile editing
+- WHEN a user saves changes, THE SYSTEM SHALL validate and persist to database
+- WHEN validation fails, THE SYSTEM SHALL display error messages inline</code></pre>
+          </div>
+
+          <p>After approval, design is generated:</p>
+
+          <div class="code-block">
+            <pre><code>## Architecture
+
+### Components
+- ProfileView: Display user information
+- ProfileEdit: Form for editing
+- ProfileService: API integration
+
+### Data Model
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  avatar?: string;
+}</code></pre>
+          </div>
+
+          <p>Finally, tasks are broken down:</p>
+
+          <div class="code-block">
+            <pre><code>## Tasks
+
+### Task 1: Create ProfileView component
+- [ ] Implement component with user data display
+- [ ] Add edit button
+- [ ] Style with existing design system
+
+### Task 2: Build ProfileEdit form
+- [ ] Create form with validation
+- [ ] Implement save/cancel actions
+- [ ] Add error handling</code></pre>
+          </div>
+
+          <h3>Step 2: Implement</h3>
+
+          <div class="code-block">
+            <code>/spec:implement .claude/specs/user-profile-page</code>
+          </div>
+
+          <p>
+            Claude loads the spec, creates TodoWrite tasks, and systematically
+            implements each task following test-driven development. Tasks are
+            marked complete only when acceptance criteria pass.
+          </p>
+
+          <hr
+            style="
+              margin: var(--space-8) 0;
+              border: 0;
+              border-top: 1px solid hsl(var(--border));
+            "
+          />
+
+          <h2>Example 2: Evolving a Spec</h2>
+
+          <p>
+            When you need to improve an existing feature, Claude Kiro handles
+            the evolution elegantly.
+          </p>
+
+          <h3>Original Spec</h3>
+
+          <div class="code-block">
+            <pre><code># .claude/specs/basic-auth/
+
+Status: Working, but needs improvements
+
+- Email/password authentication
+- Basic session management
+- No 2FA, no OAuth</code></pre>
+          </div>
+
+          <h3>Create Evolution</h3>
+
+          <div class="code-block">
+            <code>/spec:create enhanced-auth-with-2fa</code>
+          </div>
+
+          <p>Claude automatically:</p>
+
+          <ul>
+            <li>
+              Finds the original
+              <code>basic-auth</code>
+              spec
+            </li>
+            <li>Includes a "Specification Heritage" section</li>
+            <li>
+              Updates
+              <code>basic-auth/tasks.md</code>
+              with "EVOLVED - See: enhanced-auth-with-2fa"
+            </li>
+            <li>
+              Creates
+              <code>basic-auth/evolution.md</code>
+              documenting lessons learned
+            </li>
+            <li>Builds on what worked, improves what didn't</li>
+          </ul>
+
+          <h3>Evolution Document</h3>
+
+          <div class="code-block">
+            <pre><code># Evolution: basic-auth → enhanced-auth-with-2fa
+
+## What Worked
+✅ Email/password flow is solid
+✅ Session management is reliable
+✅ Error handling is clear
+
+## What Changed
+🔄 Added 2FA support (TOTP)
+🔄 Implemented OAuth providers
+🔄 Enhanced session security
+
+## Lessons Learned
+- Keep core auth flow simple
+- Build 2FA as optional layer
+- OAuth should be pluggable
+
+## Migration Path
+1. Deploy enhanced-auth alongside basic-auth
+2. Migrate users gradually
+3. Deprecate basic-auth after 30 days</code></pre>
+          </div>
+
+          <hr
+            style="
+              margin: var(--space-8) 0;
+              border: 0;
+              border-top: 1px solid hsl(var(--border));
+            "
+          />
+
+          <h2>Example 3: Multi-Task Specification</h2>
+
+          <p>
+            Complex features require multiple coordinated tasks. Here's how
+            Claude Kiro handles them.
+          </p>
+
+          <div class="code-block">
+            <code>/spec:create real-time-notifications</code>
+          </div>
+
+          <h3>Generated Task Breakdown</h3>
+
+          <div class="code-block">
+            <pre><code>### Task 1: WebSocket Server Setup
+**Dependencies:** None
+**Files:** src/websocket/server.ts
+**Acceptance:**
+- [ ] WebSocket server running on port 3001
+- [ ] Connection handling with authentication
+- [ ] Heartbeat/keepalive implemented
+
+### Task 2: Notification Data Model
+**Dependencies:** None
+**Files:** src/models/notification.ts, migrations/
+**Acceptance:**
+- [ ] Database schema created
+- [ ] TypeScript interfaces defined
+- [ ] CRUD operations tested
+
+### Task 3: Notification Service
+**Dependencies:** Task 1, Task 2
+**Files:** src/services/notification.ts
+**Acceptance:**
+- [ ] Create notification API
+- [ ] Broadcast to connected users
+- [ ] Persistence and retrieval
+
+### Task 4: Client Integration
+**Dependencies:** Task 3
+**Files:** src/client/notification.ts
+**Acceptance:**
+- [ ] WebSocket client connection
+- [ ] Real-time updates
+- [ ] Offline queuing</code></pre>
+          </div>
+
+          <p>
+            Notice how dependencies are explicitly tracked. Claude implements
+            Task 1 and 2 in parallel, then Task 3, then Task 4.
+          </p>
+
+          <hr
+            style="
+              margin: var(--space-8) 0;
+              border: 0;
+              border-top: 1px solid hsl(var(--border));
+            "
+          />
+
+          <h2>Common Patterns</h2>
+
+          <div class="card-grid-1">
+            <div class="card">
+              <h3>📝 EARS Template</h3>
+              <div class="code-block" style="margin-top: var(--space-3)">
+                <code>WHEN [event/condition] THE SYSTEM SHALL [behavior]</code>
+              </div>
+              <p style="margin-top: var(--space-3); font-size: var(--text-sm)">
+                Use for all functional requirements
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>🎯 Task Structure</h3>
+              <div class="code-block" style="margin-top: var(--space-3)">
+                <pre><code>### Task N: [Name]
+**Dependencies:** [Tasks]
+**Files:** [Paths]
+**Acceptance:**
+- [ ] Criterion 1
+- [ ] Criterion 2</code></pre>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>🔄 Evolution Header</h3>
+              <div class="code-block" style="margin-top: var(--space-3)">
+                <pre><code>## Specification Heritage
+**Evolves From:** [original-spec]
+**Preserves:** [what stays]
+**Supersedes:** [what changes]
+**Evolution Reason:** [why]</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h2>Copy-Paste Templates</h2>
+
+          <h3>Requirements Template</h3>
+
+          <div class="code-block">
+            <pre><code># Feature: [Feature Name]
+
+## User Story
+**As a** [user type]
+**I want** [goal]
+**So that** [benefit]
+
+## Requirements
+
+### Functional
+- WHEN [condition], THE SYSTEM SHALL [behavior]
+- WHEN [condition], THE SYSTEM SHALL [behavior]
+
+### Non-Functional
+- Performance: [requirement]
+- Security: [requirement]
+- Accessibility: [requirement]
+
+## Constraints
+- [Technical constraint]
+- [Business constraint]
+
+## Out of Scope
+- [Item not included]</code></pre>
+          </div>
+
+          <h3>Design Template</h3>
+
+          <div class="code-block">
+            <pre><code># Design: [Feature Name]
+
+## Architecture
+[High-level overview]
+
+## Component Analysis
+
+### Component 1
+- **Purpose:** [what it does]
+- **Interfaces:** [inputs/outputs]
+- **Dependencies:** [what it needs]
+
+## Data Models
+```typescript
+interface [Name] {
+  [fields]
+}
+```
+
+## Testing Strategy
+- Unit tests: [coverage]
+- Integration tests: [scenarios]
+- E2E tests: [user flows]</code></pre>
+          </div>
+
+          <h3>Tasks Template</h3>
+
+          <div class="code-block">
+            <pre><code># Implementation Tasks: [Feature Name]
+
+**Status:** Not Started
+**Spec:** [requirements.md](./requirements.md) | [design.md](./design.md)
+
+### Task 1: [Name]
+**Description:** [What this task does]
+**Dependencies:** None
+**Files:** [file paths]
+**Acceptance:**
+- [ ] [Criterion 1]
+- [ ] [Criterion 2]
+**Estimated Complexity:** Low/Medium/High</code></pre>
+          </div>
+
+          <h2>Best Practices from Real Projects</h2>
+
+          <div class="callout callout-info">
+            <h4 style="margin-bottom: var(--space-2)">✅ Do This</h4>
+            <ul style="margin-left: var(--space-6); margin-bottom: 0">
+              <li>
+                <strong>Be specific in requirements:</strong>
+                "Save button disabled" is better than "handle save state"
+              </li>
+              <li>
+                <strong>Include error cases:</strong>
+                Don't just spec the happy path
+              </li>
+              <li>
+                <strong>Estimate complexity:</strong>
+                Helps prioritize and plan
+              </li>
+              <li>
+                <strong>Link related specs:</strong>
+                Build a knowledge graph
+              </li>
+              <li>
+                <strong>Update specs when learning:</strong>
+                Capture what you discover
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="callout callout-warning"
+            style="margin-top: var(--space-4)"
+          >
+            <h4 style="margin-bottom: var(--space-2)">⚠️ Avoid This</h4>
+            <ul style="margin-left: var(--space-6); margin-bottom: 0">
+              <li>
+                <strong>Vague requirements:</strong>
+                "It should be fast" → Define performance targets
+              </li>
+              <li>
+                <strong>Skipping approval gates:</strong>
+                Always review before proceeding
+              </li>
+              <li>
+                <strong>Implementation details in requirements:</strong>
+                Say what, not how
+              </li>
+              <li>
+                <strong>Marking incomplete tasks done:</strong>
+                Acceptance criteria must pass
+              </li>
+              <li>
+                <strong>Starting without a spec:</strong>
+                The time investment pays off
+              </li>
+            </ul>
+          </div>
+
+          <h2>Next Steps</h2>
+
+          <p>Ready to apply these patterns in your own projects?</p>
+
+          <div class="hero-actions" style="justify-content: flex-start">
+            <a href="/getting-started.html" class="btn btn-primary">
+              Get Started
+            </a>
+            <a href="/methodology.html" class="btn btn-outline">
+              Learn Methodology
+            </a>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Framework JS -->
+    <script src="/assets/js/kiro.js"></script>
+  </body>
+</html>

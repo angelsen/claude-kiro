@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="[PAGE_DESCRIPTION]" />
+    <meta name="author" content="Claude Kiro" />
+    <title>[PAGE_TITLE] - Claude Kiro</title>
+
+    <!-- Framework CSS -->
+    <link rel="stylesheet" href="/assets/css/theme.css" />
+    <link rel="stylesheet" href="/assets/css/kiro.css" />
+
+    <!-- Favicon (future) -->
+    <!-- <link rel="icon" href="/assets/img/ghost-icon.svg" type="image/svg+xml"> -->
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="container nav-container">
+        <a href="/" class="nav-brand">
+          <img
+            src="/assets/img/ghost-icon.svg"
+            alt="Claude Kiro"
+            class="nav-logo"
+          />
+          <span>Claude Kiro</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="nav-links">
+          <a href="/getting-started.html">Docs</a>
+          <a href="/methodology.html">Methodology</a>
+          <a
+            href="https://github.com/angelsen/claude-kiro"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
+
+        <!-- Mobile Toggle -->
+        <button class="nav-toggle" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div class="nav-mobile">
+        <a href="/getting-started.html">Getting Started</a>
+        <a href="/methodology.html">Methodology</a>
+        <a href="/cli.html">CLI Reference</a>
+        <a href="/commands.html">Slash Commands</a>
+        <a href="/examples.html">Examples</a>
+        <a
+          href="https://github.com/angelsen/claude-kiro"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="docs-layout">
+        <!-- Sidebar (for doc pages) -->
+        <aside class="sidebar">
+          <nav aria-label="Documentation navigation">
+            <div class="sidebar-section">
+              <h4>Introduction</h4>
+              <ul>
+                <li><a href="/getting-started.html">Getting Started</a></li>
+                <li><a href="/methodology.html">Methodology</a></li>
+              </ul>
+            </div>
+
+            <div class="sidebar-section">
+              <h4>Reference</h4>
+              <ul>
+                <li><a href="/cli.html">CLI Commands</a></li>
+                <li><a href="/commands.html">Slash Commands</a></li>
+              </ul>
+            </div>
+
+            <div class="sidebar-section">
+              <h4>Guides</h4>
+              <ul>
+                <li><a href="/examples.html">Examples</a></li>
+              </ul>
+            </div>
+          </nav>
+        </aside>
+
+        <!-- Page Content -->
+        <main class="content">
+          <h1>[PAGE_HEADING]</h1>
+
+          <p class="text-muted">[PAGE_INTRODUCTION]</p>
+
+          <!-- Example: Callout -->
+          <div class="callout callout-info">
+            <strong>Note:</strong>
+            This is an informational callout.
+          </div>
+
+          <!-- Example: Code Block -->
+          <div class="code-block">
+            <code># Example command ck init</code>
+          </div>
+
+          <!-- Example: Tabs -->
+          <div class="tabs">
+            <div class="tab-list" role="tablist">
+              <button class="tab-button" role="tab" aria-selected="true">
+                Option 1
+              </button>
+              <button class="tab-button" role="tab" aria-selected="false">
+                Option 2
+              </button>
+            </div>
+            <div class="tab-panel" role="tabpanel">
+              <p>Content for option 1</p>
+            </div>
+            <div class="tab-panel" role="tabpanel" hidden>
+              <p>Content for option 2</p>
+            </div>
+          </div>
+
+          <!-- Example: Card Grid -->
+          <div class="card-grid">
+            <div class="card">
+              <h3>Card Title</h3>
+              <p>Card description goes here.</p>
+            </div>
+            <div class="card">
+              <h3>Card Title</h3>
+              <p>Card description goes here.</p>
+            </div>
+            <div class="card">
+              <h3>Card Title</h3>
+              <p>Card description goes here.</p>
+            </div>
+          </div>
+
+          <!-- Example: Buttons -->
+          <div class="hero-actions">
+            <a href="#" class="btn btn-primary btn-lg">Primary Action</a>
+            <a href="#" class="btn btn-outline btn-lg">Secondary Action</a>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Framework JS -->
+    <script src="/assets/js/kiro.js"></script>
+  </body>
+</html>

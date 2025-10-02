@@ -1,7 +1,7 @@
 ---
 description: Implement a task from the specification
 argument-hint: [task-number-or-description]
-allowed-tools: Read, Write, Edit, Grep, Glob, TodoWrite
+allowed-tools: Read, Write, Edit, Grep, Glob, Bash, TodoWrite
 ---
 
 Implement task: $ARGUMENTS
