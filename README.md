@@ -2,9 +2,11 @@
 
 A unified CLI tool and methodology that brings spec-driven development workflow to Claude Code.
 
+**📖 [Documentation](https://angelsen.github.io/claude-kiro/)** | **🚀 [Getting Started](https://angelsen.github.io/claude-kiro/getting-started.html)** | **⚙️ [CLI Reference](https://angelsen.github.io/claude-kiro/cli.html)**
+
 ## What This Is
 
-Claude Kiro (`ck`) provides:
+Claude Kiro `ck` provides:
 - **Automated project setup** for spec-driven development
 - **Smart hooks** that provide spec context while coding
 - **Slash commands** for structured workflows
@@ -124,13 +126,10 @@ All research extracted from local scraped docs:
 
 ## Development
 
-### Local Documentation Server
+### Code Formatting
 
 ```bash
-# Serve docs locally
-cd docs
-python -m http.server 8000
-# Visit: http://localhost:8000/
+make format-docs  # Format HTML/CSS/JS with prettier
 ```
 
 ## Implementation Status

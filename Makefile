@@ -8,7 +8,7 @@ help:
 	@echo "  make version-minor    Bump minor version (0.X.0)"
 	@echo "  make version-major    Bump major version (X.0.0)"
 	@echo ""
-	@echo "Formatting:"
+	@echo "Development:"
 	@echo "  make format-docs      Format HTML/CSS/JS with prettier"
 	@echo ""
 	@echo "Build & publish:"
