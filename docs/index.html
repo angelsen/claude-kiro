@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Spec-driven development for Claude Code using output styles, slash commands, and hooks. Get Kiro's proven methodology without the custom IDE.">
+
+    <title>Claude Kiro - Spec-Driven Development for Claude Code</title>
+
+    <style>
+        /* CSS Reset and Base Styles */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* CSS Custom Properties - Kiro Design System */
+        :root {
+            /* Background colors (from Kiro's actual dark theme) */
+            --bg-black-900: #000000;
+            --bg-black-800: #0a0a0a;
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --bg-tertiary: #1a1a1a;
+            --bg-prey-700: #1a1a1a;
+            --bg-prey-500: #2a2a2a;
+            --bg-prey-400: #3a3a3a;
+
+            /* Text colors */
+            --text-primary: #ffffff;
+            --text-secondary: #e5e7eb;
+            --text-tertiary: #999999;
+            --text-prey-300: #999999;
+
+            /* Accent colors (Kiro's actual purple palette) */
+            --accent-primary: #8627e5;
+            --accent-hover: #9945f0;
+            --accent-muted: #c2a0fd;
+            --accent-light: #b16bff;
+            --bg-purple-500: #8627e5;
+            --bg-purple-400: #9945f0;
+            --bg-purple-300: #b16bff;
+            --text-purple-500: #9046FF;
+            --text-purple-300: #c2a0fd;
+
+            /* Border colors */
+            --border-subtle: #e5e7eb;
+            --border-dark: #374151;
+
+            /* Spacing scale (8px base unit) */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 6rem;
+
+            /* Font stacks - System fonts */
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+
+            /* Type scale - Matching Kiro's refined sizing */
+            --text-h1: clamp(2.5rem, 5vw, 4rem);
+            --text-h2: clamp(2rem, 4vw, 2.5rem);
+            --text-h3: clamp(1.5rem, 3vw, 1.875rem);
+            --text-title1: 1.375rem;
+            --text-title2: 1.25rem;
+            --text-body: 1.125rem;
+            --text-small: 0.875rem;
+
+            /* Line heights - Kiro's precise values */
+            --leading-tight: 1.01;
+            --leading-snug: 1.2;
+            --leading-normal: 1.5;
+            --leading-relaxed: 1.75;
+        }
+
+        /* Base Styles */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            font-size: var(--text-body);
+            line-height: var(--leading-normal);
+            color: var(--text-secondary);
+            background-color: var(--bg-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-primary);
+            font-weight: 700;
+            line-height: var(--leading-tight);
+            margin-bottom: var(--space-sm);
+        }
+
+        h1 {
+            font-size: var(--text-h1);
+        }
+
+        h2 {
+            font-size: var(--text-h2);
+        }
+
+        h3 {
+            font-size: var(--text-h3);
+        }
+
+        p {
+            margin-bottom: var(--space-sm);
+        }
+
+        a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+        }
+
+        a:focus {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 var(--space-sm);
+        }
+
+        /* Responsive breakpoints */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 720px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 960px;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .container {
+                max-width: 1200px;
+            }
+        }
+
+        /* Utility classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Header Styles */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(134, 39, 229, 0.2);
+            padding: var(--space-sm) 0;
+            transition: all 0.3s ease;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .logo-icon {
+            border-radius: 8px;
+        }
+
+        .logo-text {
+            font-size: var(--text-title1);
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .cta-button {
+            position: relative;
+            overflow: hidden;
+            background-color: var(--accent-primary);
+            color: var(--text-primary);
+            padding: 0.625rem var(--space-sm);
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: var(--text-small);
+            transition: all 0.35s ease;
+            z-index: 1;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background-color: var(--bg-purple-400);
+            border-radius: 50%;
+            transform: translateY(50%) scale(0);
+            transition: transform 0.35s ease;
+        }
+
+        .cta-button:hover {
+            color: var(--bg-black-900);
+            transform: translateY(-2px);
+        }
+
+        .cta-button:hover::before {
+            transform: scale(2.5);
+        }
+
+        .cta-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Hero Section Styles */
+        .hero {
+            padding: var(--space-xl) 0;
+            text-align: center;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #191919 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(134, 39, 229, 0.1) 0%, transparent 70%);
+            animation: pulse 10s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .hero-icon {
+            display: block;
+            margin: 0 auto var(--space-md);
+            border-radius: 16px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, var(--text-h1));
+            line-height: var(--leading-tight);
+            margin-bottom: var(--space-md);
+            background: linear-gradient(90deg, #fff 0%, var(--accent-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .workflow-tagline {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
+        }
+
+        .workflow-step {
+            font-family: var(--font-mono);
+            font-size: var(--text-small);
+            color: var(--accent-primary);
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-dark);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .workflow-step:not(:last-child)::after {
+                content: '→';
+                position: absolute;
+                right: -1.5rem;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 1.5rem;
+                color: var(--accent-primary);
+            }
+        }
+
+        .value-prop {
+            font-size: var(--text-body);
+            line-height: var(--leading-relaxed);
+            color: var(--text-secondary);
+            max-width: 60ch;
+            margin: 0 auto var(--space-lg);
+        }
+
+        .cta-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            align-items: center;
+            margin-bottom: var(--space-md);
+        }
+
+        @media (min-width: 768px) {
+            .cta-group {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        .cta-primary {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            background-color: var(--bg-purple-500);
+            color: var(--text-primary);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: var(--text-body);
+            transition: all 0.35s ease;
+            z-index: 1;
+        }
+
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--bg-purple-300) 0%, #ffffff 100%);
+            border-radius: 50%;
+            transform: translateY(50%) scale(0);
+            transition: transform 0.35s ease;
+        }
+
+        .cta-primary:hover {
+            color: var(--bg-black-900);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(134, 39, 229, 0.3);
+        }
+
+        .cta-primary:hover::before {
+            transform: scale(2.5) translateY(0);
+        }
+
+        .cta-primary:active {
+            transform: scale(0.98);
+        }
+
+        .cta-secondary {
+            position: relative;
+            display: inline-block;
+            color: var(--text-purple-300);
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid var(--bg-purple-500);
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: var(--text-body);
+            background: transparent;
+            overflow: hidden;
+            transition: all 0.35s ease;
+            z-index: 1;
+        }
+
+        .cta-secondary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--bg-purple-500) 0%, var(--bg-purple-400) 100%);
+            border-radius: 50%;
+            transform: translateY(50%) scale(0);
+            transition: transform 0.35s ease;
+        }
+
+        .cta-secondary:hover {
+            color: var(--text-primary);
+            border-color: var(--bg-purple-400);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(134, 39, 229, 0.3);
+        }
+
+        .cta-secondary:hover::before {
+            transform: scale(2.5) translateY(0);
+        }
+
+        .cta-secondary:active {
+            transform: scale(0.98);
+        }
+
+        /* Pitch Badges */
+        .pitch-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            margin-top: var(--space-md);
+        }
+
+        .badge {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, rgba(134, 39, 229, 0.1) 0%, rgba(134, 39, 229, 0.05) 100%);
+            border: 1px solid rgba(134, 39, 229, 0.3);
+            border-radius: 50px;
+            font-size: var(--text-small);
+            color: var(--text-purple-300);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .badge::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(134, 39, 229, 0.3) 0%, transparent 70%);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease;
+            opacity: 0;
+        }
+
+        .badge:hover::before {
+            transform: translate(-50%, -50%) scale(2);
+            opacity: 1;
+        }
+
+        .badge:hover {
+            transform: translateY(-2px);
+            border-color: var(--bg-purple-500);
+            box-shadow: 0 5px 20px rgba(134, 39, 229, 0.3);
+        }
+
+        .badge-icon {
+            font-size: 1.1rem;
+            filter: saturate(0.8);
+        }
+
+        .badge-text {
+            background: linear-gradient(90deg, var(--text-purple-300) 0%, var(--text-purple-500) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Individual badge animations */
+        .badge-pulse {
+            animation: badgePulse 3s ease-in-out infinite;
+        }
+
+        .badge-glow {
+            animation: badgeGlow 3s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+
+        .badge-shine {
+            animation: badgeShine 3s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes badgeGlow {
+            0%, 100% { box-shadow: 0 0 5px rgba(134, 39, 229, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(134, 39, 229, 0.4); }
+        }
+
+        @keyframes badgeShine {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .install-command {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(134, 39, 229, 0.4);
+            border-radius: 12px;
+            padding: var(--space-sm) var(--space-md);
+            margin: var(--space-lg) auto;
+            max-width: 90%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(134, 39, 229, 0.1),
+                        inset 0 0 20px rgba(134, 39, 229, 0.05);
+        }
+
+        .install-command::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--bg-purple-500), transparent, var(--bg-purple-300));
+            border-radius: 12px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .install-command:hover::before {
+            opacity: 0.2;
+        }
+
+        @media (min-width: 768px) {
+            .install-command {
+                max-width: 600px;
+            }
+        }
+
+        /* Install command styles */
+        .install-command code {
+            font-family: var(--font-mono);
+            font-size: var(--text-small);
+            color: var(--text-purple-300);
+            display: block;
+            padding: 0.75rem 1.5rem;
+            background: rgba(134, 39, 229, 0.05);
+            border-radius: 8px;
+            word-break: break-all;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .install-command code:hover {
+            background: rgba(134, 39, 229, 0.15);
+            transform: scale(1.02);
+            color: var(--text-purple-300);
+        }
+
+        .install-command code:active {
+            transform: scale(0.98);
+        }
+
+        .install-command.copied code {
+            background: rgba(46, 204, 113, 0.15);
+            animation: copyPulse 0.5s ease;
+        }
+
+        @keyframes copyPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Primary Features Section */
+        .primary-features {
+            padding: var(--space-xl) 0;
+            background-color: var(--bg-primary);
+        }
+
+        .primary-features h2 {
+            text-align: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .features-grid-primary {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-md);
+        }
+
+        @media (min-width: 768px) {
+            .features-grid-primary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .features-grid-primary {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .feature-card {
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(134, 39, 229, 0.2);
+            border-radius: 18px;
+            padding: var(--space-md);
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(134, 39, 229, 0.5), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(134, 39, 229, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(134, 39, 229, 0.2),
+                        0 0 20px rgba(134, 39, 229, 0.1);
+            background: rgba(26, 26, 26, 0.6);
+        }
+
+        .feature-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .feature-card h3 {
+            font-size: var(--text-title1);
+            margin-bottom: var(--space-sm);
+            color: var(--accent-primary);
+        }
+
+        .feature-card p {
+            font-size: var(--text-small);
+            color: var(--text-secondary);
+            line-height: var(--leading-relaxed);
+            margin-bottom: 0;
+        }
+
+        /* How It Works Section */
+        .workflow {
+            padding: var(--space-xl) 0;
+            background-color: var(--bg-secondary);
+        }
+
+        .workflow h2 {
+            text-align: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
+            position: relative;
+        }
+
+        @media (min-width: 1024px) {
+            .steps {
+                grid-template-columns: repeat(3, 1fr);
+                gap: var(--space-md);
+            }
+        }
+
+        .step {
+            background: rgba(26, 26, 26, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(134, 39, 229, 0.2);
+            border-radius: 18px;
+            padding: var(--space-md);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.35s ease;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 0;
+            background: linear-gradient(90deg, var(--bg-purple-500) 0%, var(--bg-purple-300) 100%);
+            transition: width 0.6s ease;
+        }
+
+        .step:hover::before {
+            width: 100%;
+        }
+
+        .step:hover {
+            background: rgba(26, 26, 26, 0.6);
+            border-color: rgba(134, 39, 229, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--bg-purple-500) 0%, var(--bg-purple-400) 100%);
+            color: var(--text-primary);
+            border-radius: 50%;
+            font-size: var(--text-title1);
+            font-weight: 700;
+            margin-bottom: var(--space-sm);
+            box-shadow: 0 4px 15px rgba(134, 39, 229, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .step:hover .step-number {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .step h3 {
+            font-size: var(--text-h3);
+            margin-bottom: var(--space-sm);
+        }
+
+        .step-command {
+            font-family: var(--font-mono);
+            font-size: var(--text-small);
+            color: var(--accent-muted);
+            margin-bottom: var(--space-sm);
+        }
+
+        .step p {
+            font-size: var(--text-small);
+            color: var(--text-secondary);
+            line-height: var(--leading-relaxed);
+        }
+
+        @media (min-width: 1024px) {
+            .step:not(:last-child)::after {
+                content: '→';
+                position: absolute;
+                right: -2rem;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 2rem;
+                color: var(--accent-primary);
+            }
+        }
+
+        /* Secondary Features Section */
+        .secondary-features {
+            padding: var(--space-xl) 0;
+            background-color: var(--bg-primary);
+        }
+
+        .secondary-features h2 {
+            text-align: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-md);
+        }
+
+        @media (min-width: 768px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .feature-item {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-dark);
+            border-radius: 12px;
+            padding: var(--space-md);
+            transition: border-color 0.3s ease;
+        }
+
+        .feature-item:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .feature-item h3 {
+            font-size: var(--text-title1);
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
+        }
+
+        .feature-item p {
+            font-size: var(--text-small);
+            color: var(--text-secondary);
+            line-height: var(--leading-relaxed);
+            margin-bottom: 0;
+        }
+
+
+        /* CTA Section */
+        .cta-section {
+            padding: var(--space-xl) 0;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            border-top: 1px solid var(--accent-primary);
+            border-bottom: 1px solid var(--accent-primary);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            margin-bottom: var(--space-sm);
+        }
+
+        .cta-section p {
+            font-size: var(--text-body);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+        }
+
+        .cta-section .cta-primary {
+            font-size: var(--text-title1);
+            padding: var(--space-sm) var(--space-lg);
+        }
+
+        /* Footer */
+        footer {
+            padding: var(--space-lg) 0;
+            background-color: var(--bg-primary);
+            border-top: 1px solid var(--border-dark);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            font-size: var(--text-small);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-tagline {
+            font-size: var(--text-small);
+            color: var(--text-tertiary);
+            text-align: center;
+        }
+
+        /* Responsive Typography */
+        @media (max-width: 767px) {
+            :root {
+                --text-h1: 2.5rem;
+                --text-h2: 2rem;
+                --text-h3: 1.5rem;
+                --text-body: 1rem;
+            }
+        }
+
+        /* Accessibility - Focus States */
+        .feature-card:focus-within,
+        .feature-item:focus-within,
+        .testimonial:focus-within {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+
+        /* Ensure proper contrast for all text */
+        @media (prefers-contrast: high) {
+            :root {
+                --text-secondary: #e5e7eb;
+                --border-dark: #6b7280;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="ghost-icon.svg" alt="Claude Kiro" width="48" height="48" class="logo-icon">
+                <span class="logo-text">Claude Kiro</span>
+            </div>
+            <a href="#get-started" class="cta-button">Get Started</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <img src="ghost-icon.svg" alt="" width="120" height="120" class="hero-icon" aria-hidden="true">
+
+                <h1>Spec-Driven Development for Claude Code</h1>
+
+                <p class="value-prop">
+                    Bring Kiro's proven methodology to Claude Code using output styles, slash commands, and hooks.
+                    No custom IDE needed—pure configuration.
+                </p>
+
+                <div class="install-command" id="install-command">
+                    <code id="install-cmd" onclick="copyInstallCommand()">curl -sSL https://angelsen.github.io/claude-kiro/install.sh | bash</code>
+                </div>
+
+                <div class="cta-group">
+                    <a href="https://github.com/angelsen/claude-kiro" class="cta-primary" target="_blank" rel="noopener">
+                        Get Started on GitHub
+                    </a>
+                    <a href="#how-it-works" class="cta-secondary">
+                        Learn How It Works
+                    </a>
+                </div>
+
+                <div class="pitch-badges">
+                    <div class="badge badge-pulse">
+                        <span class="badge-icon">⚡</span>
+                        <span class="badge-text">92% Kiro Parity</span>
+                    </div>
+                    <div class="badge badge-glow">
+                        <span class="badge-icon">🎯</span>
+                        <span class="badge-text">Zero Dependencies</span>
+                    </div>
+                    <div class="badge badge-shine">
+                        <span class="badge-icon">🚀</span>
+                        <span class="badge-text">Instant Setup</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Primary Features Section -->
+        <section class="primary-features">
+            <div class="container">
+                <h2>Why Claude Kiro</h2>
+                <div class="features-grid-primary">
+                    <article class="feature-card">
+                        <h3>Structured Requirements with EARS Notation</h3>
+                        <p>Every requirement uses "WHEN [condition] THE SYSTEM SHALL [behavior]" format for unambiguous, testable specifications.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <h3>Automated Task Tracking with TodoWrite</h3>
+                        <p>Native Claude Code task management keeps your implementation progress visible and organized.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <h3>Pure Configuration, No Custom Code</h3>
+                        <p>Five config files in .claude/ folder—no npm packages, no build process, just Claude Code primitives.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <h3>92% Feature Parity with Kiro IDE</h3>
+                        <p>Get spec-driven development, thinking mode, hooks, and more using only output styles and slash commands.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="workflow">
+            <div class="container">
+                <h2>How It Works</h2>
+                <div class="steps">
+                    <article class="step">
+                        <div class="step-number">1</div>
+                        <h3>Create Spec</h3>
+                        <p class="step-command">/spec:create "your feature description"</p>
+                        <p>Generate requirements (EARS notation), design, and implementation tasks with approval gates</p>
+                    </article>
+
+                    <article class="step">
+                        <div class="step-number">2</div>
+                        <h3>Track Progress</h3>
+                        <p class="step-command">TodoWrite integration</p>
+                        <p>Built-in task management shows what's done, what's in progress, and what's next</p>
+                    </article>
+
+                    <article class="step">
+                        <div class="step-number">3</div>
+                        <h3>Implement</h3>
+                        <p class="step-command">/spec:implement [task-number]</p>
+                        <p>Execute tasks systematically with full context from requirements and design</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Secondary Features Section -->
+        <section class="secondary-features">
+            <div class="container">
+                <h2>Everything You Need</h2>
+                <div class="features-grid">
+                    <article class="feature-item">
+                        <h3>EARS Notation for Testable Requirements</h3>
+                        <p>Turn every spec into executable test cases with clear conditions and expected behaviors</p>
+                    </article>
+
+                    <article class="feature-item">
+                        <h3>TodoWrite Integration</h3>
+                        <p>Native progress tracking without external tools or context switching</p>
+                    </article>
+
+                    <article class="feature-item">
+                        <h3>Thinking Mode for Deep Planning</h3>
+                        <p>Extended reasoning for complex architectural decisions and edge case analysis</p>
+                    </article>
+
+                    <article class="feature-item">
+                        <h3>ExitPlanMode for Approval Gates</h3>
+                        <p>Review requirements, design, and tasks before implementation begins</p>
+                    </article>
+
+                    <article class="feature-item">
+                        <h3>Hooks for Automation (Phase 2)</h3>
+                        <p>Automatically update specs when code changes, run tests on save</p>
+                    </article>
+
+                    <article class="feature-item">
+                        <h3>Steering Files for Project Context</h3>
+                        <p>Add coding standards, architecture decisions, and project-specific patterns</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- CTA Section -->
+        <section id="get-started" class="cta-section">
+            <div class="container">
+                <h2>Get Started for Free</h2>
+                <p>One command installs all 5 config files</p>
+                <a href="https://github.com/angelsen/claude-kiro" class="cta-primary" target="_blank" rel="noopener">
+                    View on GitHub
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <nav class="footer-links" aria-label="Footer navigation">
+                    <a href="https://github.com/angelsen/claude-kiro" target="_blank" rel="noopener">GitHub Repository</a>
+                    <a href="https://github.com/angelsen/claude-kiro/blob/master/VISION.md" target="_blank" rel="noopener">VISION.md</a>
+                    <a href="https://github.com/angelsen/claude-kiro#implementation-guide" target="_blank" rel="noopener">Implementation Guide</a>
+                </nav>
+                <p class="footer-tagline">Built for developers who want structure without sacrificing speed</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function copyInstallCommand() {
+            const code = document.getElementById('install-cmd').textContent;
+            const container = document.getElementById('install-command');
+
+            navigator.clipboard.writeText(code).then(() => {
+                // Add copied class for visual feedback
+                container.classList.add('copied');
+
+                // Remove the class after 1 second
+                setTimeout(() => {
+                    container.classList.remove('copied');
+                }, 1000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                // Just log the error, no fallback
+            });
+        }
+    </script>
+</body>
+</html>
